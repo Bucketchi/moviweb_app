@@ -4,6 +4,7 @@ from moviweb_app.datamanager.data_management import DataManagerInterface
 
 API_KEY = "81cc18ae"
 
+
 class JSONDataManager(DataManagerInterface):
     def __init__(self, filename):
         self.filename = filename
@@ -24,6 +25,14 @@ class JSONDataManager(DataManagerInterface):
         with open(self.filename, "r") as file:
             users = json.load(file)
             return [user["name"] for user in users if user["id"] == user_id][0]
+
+    def get_movie_by_id(self, user_id, movie_id):
+        users = self.get_all_users()
+        for user in users:
+            if user['id'] == user_id:
+                for movie in user['movies']:
+                    if movie['id'] == movie_id:
+                        return movie
 
     def add_user(self, user_name):
         users = self.get_all_users()
@@ -72,3 +81,30 @@ class JSONDataManager(DataManagerInterface):
         with open(self.filename, "w") as file:
             file.write(json.dumps(users))
 
+    def update_movie(self, user_id, movie_id, movie_name, movie_director, movie_year, movie_rating):
+        users = self.get_all_users()
+
+        for user in users:
+            if user['id'] == user_id:
+                for movie in user['movies']:
+                    if movie['id'] == movie_id:
+                        movie['name'] = movie_name
+                        movie['director'] = movie_director
+                        movie['year'] = movie_year
+                        movie['rating'] = movie_rating
+                        break
+                break
+        with open(self.filename, "w") as file:
+            file.write(json.dumps(users))
+
+    def delete_movie(self, user_id, movie_id):
+        users = self.get_all_users()
+
+        for user in users:
+            if user['id'] == user_id:
+                for movie in user['movies']:
+                    if movie['id'] == movie_id:
+                        user['movies'].remove(movie)
+                        break
+        with open(self.filename, "w") as file:
+            file.write(json.dumps(users))

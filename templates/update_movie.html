@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Movie</title>
+</head>
+<body>
+    <h1>Add a user</h1>
+    <form method="POST" action="/users/{{user_id}}/update_movie/{{movie_id}}">
+        <input type="text" name="movie_name" placeholder="{{movie['name']}}" value="{{movie['name']}}">
+        <input type="text" name="movie_director" placeholder="{{movie['director']}}" value="{{movie['director']}}">
+        <input type="text" name="movie_year" placeholder="{{movie['year']}}" value="{{movie['year']}}">
+        <input type="text" name="movie_rating" placeholder="{{movie['rating']}}" value="{{movie['rating']}}">
+        <input class="btn" type="submit" name="Submit" value="Publish">
+    </form>
+</body>
+</html>

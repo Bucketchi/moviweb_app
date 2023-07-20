@@ -36,15 +36,29 @@ def add_user():
 def add_movie(user_id):
     if request.method == 'POST':
         movie_name = request.form['movie_name']
-        data_manager.add_movie(user_id,movie_name)
+        data_manager.add_movie(user_id, movie_name)
         return redirect(url_for('home'))
-    return render_template('add_movie.html')
+    return render_template('add_movie.html', user_id=user_id)
 
 
 @app.route('/users/<int:user_id>/update_movie/<int:movie_id>', methods=['GET', 'POST'])
 def update_movie(user_id, movie_id):
+    if request.method == 'POST':
+        movie_name = request.form['movie_name']
+        movie_director = request.form['movie_director']
+        movie_year = request.form['movie_year']
+        movie_rating = request.form['movie_rating']
+
+        data_manager.update_movie(user_id, movie_id, movie_name, movie_director, movie_year, movie_rating)
+        return redirect(url_for('home'))
+    movie = data_manager.get_movie_by_id(user_id, movie_id)
+    return render_template('update_movie.html', user_id=user_id, movie_id=movie_id, movie=movie)
 
 
+@app.route('/users/<int:user_id>/delete_movie/<int:movie_id>')
+def delete_movie(user_id, movie_id):
+    data_manager.delete_movie(user_id, movie_id)
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
