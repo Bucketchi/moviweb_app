@@ -1,17 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Movie</title>
-</head>
-<body>
-    <h1>Add a user</h1>
-    <form method="POST" action="/users/{{user_id}}/update_movie/{{movie_id}}">
-        <input type="text" name="movie_name" placeholder="{{movie['name']}}" value="{{movie['name']}}">
-        <input type="text" name="movie_director" placeholder="{{movie['director']}}" value="{{movie['director']}}">
-        <input type="text" name="movie_year" placeholder="{{movie['year']}}" value="{{movie['year']}}">
-        <input type="text" name="movie_rating" placeholder="{{movie['rating']}}" value="{{movie['rating']}}">
-        <input class="btn" type="submit" name="Submit" value="Publish">
-    </form>
-</body>
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Update Movie</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="/" class="logo">
+									<span class="symbol"><img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="" /></span>
+									<span class="title">My Movie List</span>
+								</a>
+						</div>
+					</header>
+
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<header>
+								<h1>Update "{{movie['name']}}"</h1>
+							</header>
+							<form method="POST" action="/users/{{user_id}}/update_movie/{{movie_id}}">
+								<div class="fields">
+									<div class="field">
+										<input type="text" name="movie_name" placeholder="{{movie['name']}}" value="{{movie['name']}}">
+									</div>
+                                    <div class="field">
+                                        <input type="text" name="movie_director" placeholder="{{movie['director']}}" value="{{movie['director']}}">
+                                    </div>
+                                    <div class="field">
+                                        <input type="text" name="movie_year" placeholder="{{movie['year']}}" value="{{movie['year']}}">
+                                    </div>
+                                    <div class="field">
+                                        <input type="text" name="movie_rating" placeholder="{{movie['rating']}}" value="{{movie['rating']}}">
+                                    </div>
+								</div>
+                                <input class="primary" type="submit" name="Submit" value="Publish">
+							</form>
+							<a href="/users/{{user_id}}/delete_movie/{{movie['id']}}">
+  								<input type="button" value="Delete Movie" class="primary" />
+							</a>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="copyright">
+								<li>&copy; My Movie List. All rights reserved</li>
+								<li>Template: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>Author: Alexandre Coutinho</li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+	</body>
 </html>

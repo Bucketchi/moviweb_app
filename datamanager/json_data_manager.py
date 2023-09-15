@@ -73,7 +73,8 @@ class JSONDataManager(DataManagerInterface):
                     'name': movie_info['Title'],
                     'director': movie_info['Director'],
                     'year': int(movie_info['Year']),
-                    'rating': float(movie_info["imdbRating"])
+                    'rating': float(movie_info["imdbRating"]),
+                    'poster_url': movie_info['Poster']
                 }
                 user['movies'].append(new_movie)
                 break
