@@ -19,12 +19,18 @@ class JSONDataManager(DataManagerInterface):
         # Return a list of all movies for a given user
         with open(self.filename, "r") as file:
             users = json.load(file)
-            return [user["movies"] for user in users if user["id"] == user_id][0]
+            try:
+                return [user["movies"] for user in users if user["id"] == user_id][0]
+            except IndexError as e:
+                print("No user with the provided ID", str(e))
 
     def get_username_by_id(self, user_id):
         with open(self.filename, "r") as file:
             users = json.load(file)
-            return [user["name"] for user in users if user["id"] == user_id][0]
+            try:
+                return [user["name"] for user in users if user["id"] == user_id][0]
+            except IndexError as e:
+                print("No user with the provided ID", str(e))
 
     def get_movie_by_id(self, user_id, movie_id):
         users = self.get_all_users()
@@ -61,24 +67,26 @@ class JSONDataManager(DataManagerInterface):
             return
         movie_info = res.json()
         new_id = 1
-        for user in users:
-            if user['id'] == user_id:
-                for movie in user['movies']:
-                    if movie['id'] == new_id:
-                        new_id += 1
-                    else:
-                        break
-                new_movie = {
-                    'id': new_id,
-                    'name': movie_info['Title'],
-                    'director': movie_info['Director'],
-                    'year': int(movie_info['Year']),
-                    'rating': float(movie_info["imdbRating"]),
-                    'poster_url': movie_info['Poster']
-                }
-                user['movies'].append(new_movie)
-                break
-
+        if movie_info["Response"] == "True":
+            for user in users:
+                if user['id'] == user_id:
+                    for movie in user['movies']:
+                        if movie['id'] == new_id:
+                            new_id += 1
+                        else:
+                            break
+                    new_movie = {
+                        'id': new_id,
+                        'name': movie_info['Title'],
+                        'director': movie_info['Director'],
+                        'year': int(movie_info['Year']),
+                        'rating': float(movie_info["imdbRating"]),
+                        'poster_url': movie_info['Poster']
+                    }
+                    user['movies'].append(new_movie)
+                    break
+        else:
+            return True
         with open(self.filename, "w") as file:
             file.write(json.dumps(users))
 
